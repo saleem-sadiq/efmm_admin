@@ -12,7 +12,6 @@ export async function POST(request: Request) {
 
   try {
     const body = await request.json();
-    console.log("BACKEND_DOMAIN:", BACKEND_DOMAIN);
     // Forward request to PHP backend
     const response = await fetch(`${BACKEND_DOMAIN}/admin/auth/signin.php`, {
       method: "POST",

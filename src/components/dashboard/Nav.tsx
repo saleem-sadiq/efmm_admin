@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/sheet";
 import { toast } from "sonner";
 import { navigation } from "./constant";
+import MyImage from "../shared/MyImage";
 
 const Nav = () => {
   const router = useRouter();
@@ -59,7 +60,7 @@ const Nav = () => {
       <div className="w-full flex flex-col mx-auto">
         <div className="w-full h-28 hidden xl:flex items-center justify-center">
           <Link href={"/"}>
-            <Image src={logo} priority alt="logo" className="w-48 h-28" />
+            <MyImage src={logo.src} priority alt="logo" className="w-48 h-28" />
           </Link>
         </div>
         <div className="w-full mx-auto px-6 text-18 font-medium hidden xl:block overflow-y-auto max-h-[70vh]">
@@ -140,10 +141,9 @@ const Nav = () => {
       </div>
       <Sheet key={path}>
         <SheetTrigger className="bg-default rounded-xl relative w-10 h-10 p-1 m-3 group xl:hidden">
-          <Image
-            className="p-2 text-white stroke-black-100 fill-black-100"
-            src={hamburger}
-            fill
+          <MyImage
+            className="p-1 text-white stroke-black-100 fill-black-100"
+            src={hamburger.src}
             alt={"hamburger icon"}
           />
         </SheetTrigger>
@@ -155,7 +155,7 @@ const Nav = () => {
             <SheetTitle>
               <div className="w-full h-28 xl:hidden flex items-center justify-center">
                 <Link href={"/"}>
-                  <Image src={logo} alt="logo" className="w-48 h-28" />
+                  <MyImage src={logo.src} alt="logo" className="w-48 h-28" />
                 </Link>
               </div>
             </SheetTitle>

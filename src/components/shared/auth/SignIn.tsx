@@ -76,7 +76,7 @@ export default function SignIn() {
       }
 
       // Redirect user after successful login
-      window.location.href = "/dashboard";
+      window.location.href = "/admin/dashboard";
     } catch (error: any) {
       toast.error(error.toString());
     } finally {

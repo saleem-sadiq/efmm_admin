@@ -20,6 +20,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import MyImage from "../MyImage";
 
 const emailSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -115,8 +116,8 @@ export default function ForgetPassword() {
     <div className="flex flex-col p-0 m-0 lg:flex-row min-h-screen bg-default text-white">
       <div className="lg:w-1/2 bg-default p-8 flex items-center justify-center">
         <div className="relative w-full max-w-md">
-          <Image
-            src={auth}
+          <MyImage
+            src={auth.src}
             alt="forget password"
             width={1000}
             height={1000}
