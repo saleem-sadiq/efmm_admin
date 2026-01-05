@@ -22,22 +22,22 @@ type NavigationItem = {
 
 const navigation: NavigationItem[] = [
   {
-    link: "/dashboard",
+    link: "/admin/dashboard",
     text: "Dashboard",
     icon: LayoutDashboardIcon,
   },
   {
-    link: "/model-account",
+    link: "/admin/model-account",
     text: "Model Account",
     icon: UserRound,
   },
   {
-    link: "/timesheet",
+    link: "/admin/timesheet",
     text: "Timesheet",
     icon: Calendar,
   },
   {
-    link: "/events",
+    link: "/admin/events",
     text: "Events",
     icon: BellRing,
   }

@@ -21,6 +21,9 @@ const MyImage: React.FC<MyImageProps> = ({
   sizes,
   srcSet,
   objectFit,
+  priority,
+  layout,
+  placeholder,
   ...props // Spread additional props
 }: MyImageProps) => {
   // Resolve `src` to a string
