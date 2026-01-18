@@ -12,8 +12,7 @@ export async function GET(request: Request) {
       request.headers.get("authorization")?.replace("Bearer ", "") ||
       cookieStore.get("token")?.value;
     const role = cookieStore.get("role")?.value;
-    console.log("Fetching timesheets with role:", role + ", token present:", token);
-    if (!token || !role) {
+    if (!token || role !== "admin") {
       return NextResponse.json(
         { status: "error", message: "Unauthorized: Missing token or role" },
         { status: 401 }

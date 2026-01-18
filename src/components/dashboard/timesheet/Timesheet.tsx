@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Timesheet, timesheetColumns } from "./TimesheetColumns";
+import { ActionProp, Timesheet, timesheetColumns } from "./TimesheetColumns";
 import ViewData from "../(tableView)/ViewData";
 
 // Function to fetch timesheet data
@@ -75,14 +75,14 @@ const Page = () => {
       </div>
     );
   }
-  console.log("Timesheet data:", data);
   return (
     <div className="mt-5 px-5">
       <p className="text-36 font-semibold text-default">Timesheets</p>
       <ViewData
         columns={timesheetColumns}
         data={data}
-        basePath="/timesheet/"
+        actionComponent={ActionProp}
+        basePath="/admin/timesheet/"
       />
     </div>
   );

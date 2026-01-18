@@ -162,7 +162,6 @@ const ViewData = <TData, TValue>({
       setIsLoading(false);
     }
   };
-  console.log("Rendering ViewData with data:", dataState);
   return (
     <div>
       <div className="flex items-center justify-between py-4">

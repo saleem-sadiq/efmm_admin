@@ -24,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${montserrat.className} bg-blackfade`}>
+      <body className={`${montserrat.className} bg-blackfade`} suppressHydrationWarning>
         <div className="w-full h-screen grid grid-cols-12 overflow-hidden">
           {/* --- Sidebar Section --- */}
           <div className="col-span-12 xl:col-span-3 flex items-center xl:block bg-blackfade2">
