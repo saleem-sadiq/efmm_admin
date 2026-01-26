@@ -10,6 +10,7 @@ import {
   Link2,
   Pencil,
   UserRound,
+  UserRoundPen,
   UsersRound,
 } from "lucide-react";
 
@@ -30,6 +31,11 @@ const navigation: NavigationItem[] = [
     link: "/admin/model-account",
     text: "Model Account",
     icon: UserRound,
+  },
+  {
+    link: "/admin/model-profile",
+    text: "Model Profile",
+    icon: UserRoundPen,
   },
   {
     link: "/admin/timesheet",

@@ -29,27 +29,17 @@ const Nav = () => {
   // Handle logout
   const handleLogout = async () => {
     toast.info("Logging out...");
-    // Give the user a brief moment to see the toast
+
+    // Clear cookies by setting expiry to the past
+    document.cookie = "token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+    document.cookie = "role=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+
+    // Use window.location.href to force a full page refresh and redirect
     setTimeout(() => {
-      router.push("/");
-    });
-
-    // try {
-    //   const response = await fetch("/api/admin/auth/logout", {
-    //     method: "POST",
-    //     credentials: "include", // Ensure cookies are included
-    //   });
-
-    //   const data = await response.json();
-    //   if (data.message === "Logout successful") {
-    //     router.push("/admin/signin"); // Redirect to sign-in page after logout
-    //   } else {
-    //     console.error("Logout failed:", data.message);
-    //   }
-    // } catch (error) {
-    //   console.error("Error during logout:", error);
-    // }
+      window.location.href = "/";
+    }, 500);
   };
+
 
   return (
     <nav
