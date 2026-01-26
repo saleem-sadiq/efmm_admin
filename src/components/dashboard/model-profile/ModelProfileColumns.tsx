@@ -8,7 +8,7 @@ import Link from "next/link";
 export type ProfileUpdate = {
   id: string;
   talent_id: string;
-  field_name: string;
+  name: string;
   old_value: string;
   new_value: string;
   status_id: number;
@@ -36,7 +36,7 @@ export const modelProfileColumns: ColumnDef<ProfileUpdate>[] = [
     header: "Talent ID",
   },
   {
-    accessorKey: "field_name",
+    accessorKey: "name",
     header: "Field Name",
   },
   {
