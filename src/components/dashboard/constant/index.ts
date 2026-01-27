@@ -6,6 +6,7 @@ import {
   ChartLine,
   FileText,
   Handshake,
+  ImageIcon,
   LayoutDashboardIcon,
   Link2,
   Pencil,
@@ -36,6 +37,11 @@ const navigation: NavigationItem[] = [
     link: "/admin/model-profile",
     text: "Model Profile",
     icon: UserRoundPen,
+  },
+  {
+    link: "/admin/model-profile-media",
+    text: "Model Media",
+    icon: ImageIcon,
   },
   {
     link: "/admin/timesheet",
