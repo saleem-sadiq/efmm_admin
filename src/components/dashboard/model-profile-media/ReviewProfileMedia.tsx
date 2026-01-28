@@ -104,8 +104,8 @@ export default function ReviewProfileMedia({ id }: { id: string }) {
                         <div>
                             <p className="text-gray-400 text-sm">Current Status</p>
                             <p className={`text-xl font-medium ${update.status_id == 1 ? "text-blue-500" :
-                                    update.status_id == 2 ? "text-green-500" :
-                                        "text-red-500"
+                                update.status_id == 2 ? "text-green-500" :
+                                    "text-red-500"
                                 }`}>
                                 {update.status_id == 1 ? "Pending" :
                                     update.status_id == 2 ? "Approved" :
@@ -121,7 +121,7 @@ export default function ReviewProfileMedia({ id }: { id: string }) {
 
                 <div className="mb-10">
                     <p className="text-gray-400 text-sm mb-4 uppercase font-bold tracking-widest">Media Preview</p>
-                    <div className="rounded-lg overflow-hidden border border-gray-800 bg-blackfade2 flex justify-center items-center min-h-[300px]">
+                    <div className="rounded-lg overflow-hidden border border-gray-800 bg-blackfade2 flex justify-center items-center min-h-[300px] w-full">
                         {update.media_type === "image" ? (
                             <img
                                 src={`${url}${update.file_name}`}
@@ -129,14 +129,45 @@ export default function ReviewProfileMedia({ id }: { id: string }) {
                                 className="max-w-full max-h-[600px] object-contain"
                             />
                         ) : (
-                            <video
-                                src={update.file_name}
-                                controls
-                                className="max-w-full max-h-[600px]"
-                            />
+                            (() => {
+                                const videoUrl = update.video_url || update.file_name;
+                                const videoId = videoUrl?.match(/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/)?.[1];
+
+                                if (videoId) {
+                                    return (
+                                        <div className="w-full aspect-video">
+                                            <iframe
+                                                width="100%"
+                                                height="100%"
+                                                src={`https://www.youtube.com/embed/${videoId}`}
+                                                title="YouTube video player"
+                                                frameBorder="0"
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                                allowFullScreen
+                                                className="rounded-lg"
+                                            ></iframe>
+                                        </div>
+                                    );
+                                }
+
+                                const isExternal = videoUrl?.startsWith("http");
+                                const finalVideoUrl = isExternal ? videoUrl : `${url}${videoUrl}`;
+
+                                return (
+                                    <video
+                                        src={finalVideoUrl}
+                                        controls
+                                        className="max-w-full max-h-[600px]"
+                                    />
+                                );
+                            })()
                         )}
                     </div>
-                    <p className="mt-2 text-sm text-gray-500 break-all">URL: {`${url}${update.file_name}`}</p>
+                    <p className="mt-2 text-sm text-gray-500 break-all">
+                        {update.media_type === "image"
+                            ? `URL: ${url}${update.file_name}`
+                            : `Video URL: ${update.video_url || update.file_name}`}
+                    </p>
                 </div>
 
                 <div className="flex justify-end gap-4 border-t border-gray-700 pt-8">
