@@ -44,6 +44,11 @@ const navigation: NavigationItem[] = [
     icon: ImageIcon,
   },
   {
+    link: "/admin/model-measurement",
+    text: "Model Measurement",
+    icon: Pencil,
+  },
+  {
     link: "/admin/timesheet",
     text: "Timesheet",
     icon: Calendar,
