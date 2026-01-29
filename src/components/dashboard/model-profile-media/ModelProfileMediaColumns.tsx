@@ -52,7 +52,7 @@ export const modelProfileMediaColumns: ColumnDef<MediaUpdate>[] = [
     header: "Preview",
     cell: ({ row }) => {
       const type = row.original.media_type;
-      const backendDomain = process.env.NEXT_PUBLIC_BACKEND_DOMAIN || "http://localhost/efmm/";
+      const backendDomain = process.env.BACKEND_DOMAIN || "http://localhost/efmm/";
       const url = `${backendDomain}Upload/model/pending/modelMedia/${row.original.file_name}`;
 
       if (type === "video") {
