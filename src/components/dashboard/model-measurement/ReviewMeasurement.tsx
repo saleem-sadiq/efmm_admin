@@ -74,7 +74,7 @@ export default function ReviewMeasurement({ id }: { id: string }) {
     if (loading) return <div className="text-center p-10 text-whitefade">Loading details...</div>;
     if (!update) return <div className="text-center p-10 text-whitefade">Update not found</div>;
 
-    const backendDomain = process.env.BACKEND_DOMAIN || "http://localhost/efmm/";
+    const backendDomain = process.env.NEXT_PUBLIC_BACKEND_DOMAIN || "http://localhost/efmm/";
     const imageUrl = `${backendDomain}Upload/model/pending/measurementPhotos/${update.file_name}`;
 
     return (

@@ -54,7 +54,7 @@ export const modelMeasurementColumns: ColumnDef<MeasurementUpdate>[] = [
     {
         header: "Preview",
         cell: ({ row }) => {
-            const backendDomain = process.env.BACKEND_DOMAIN || "http://localhost/efmm/";
+            const backendDomain = process.env.NEXT_PUBLIC_BACKEND_DOMAIN || "http://localhost/efmm/";
             const url = `${backendDomain}Upload/model/pending/measurementPhotos/${row.original.file_name}`;
             return (
                 <div className="w-16 h-16 rounded overflow-hidden bg-blackfade">

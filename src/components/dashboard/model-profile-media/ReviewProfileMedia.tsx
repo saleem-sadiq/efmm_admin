@@ -23,7 +23,7 @@ export default function ReviewProfileMedia({ id }: { id: string }) {
     const [submitting, setSubmitting] = useState(false);
     const [rejectOpen, setRejectOpen] = useState(false);
     const [rejectionReason, setRejectionReason] = useState("");
-    const backendDomain = process.env.BACKEND_DOMAIN || "http://localhost/efmm/";
+    const backendDomain = process.env.NEXT_PUBLIC_BACKEND_DOMAIN || "http://localhost/efmm/";
     const url = `${backendDomain}Upload/model/pending/modelMedia/`;
     useEffect(() => {
         const fetchUpdate = async () => {
