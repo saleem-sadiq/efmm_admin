@@ -1,48 +1,100 @@
-import type React from "react"
-import { Users, Award as IdCard, Info, ImageIcon, Play, Pencil, Calendar, FileText } from "lucide-react"
+"use client";
+
+import React, { useEffect, useState } from "react";
+import { navigation } from "./dashboard/constant";
+import { Loader2 } from "lucide-react";
+
+import Link from "next/link";
 
 interface RequestCardProps {
-  icon: React.ElementType
-  count: number
-  label: string
+  icon: React.ElementType;
+  count: number;
+  label: string;
+  link: string;
 }
 
-function RequestCard({ icon: Icon, count, label }: RequestCardProps) {
+function RequestCard({ icon: Icon, count, label, link }: RequestCardProps) {
   return (
-    <div className="bg-default text-white p-6 rounded-lg shadow-sm flex flex-col justify-between min-h-[160px]">
-      <div className="flex items-center gap-4">
-        <Icon className="w-10 h-10" strokeWidth={1.5} />
-        <span className="text-4xl font-light">{count}</span>
+    <Link href={link}>
+      <div className="bg-default text-white p-6 rounded-lg shadow-sm flex flex-col justify-between min-h-[160px] hover:scale-[1.02] hover:shadow-md transition-all cursor-pointer group">
+        <div className="flex items-center gap-4">
+          <Icon
+            className="w-10 h-10 group-hover:scale-110 transition-transform"
+            strokeWidth={1.5}
+          />
+          <span className="text-4xl font-light">{count}</span>
+        </div>
+        <div className="text-sm font-bold tracking-wider mt-4">
+          {label.toUpperCase()}
+        </div>
       </div>
-      <div className="text-sm font-bold tracking-wider mt-4">{label.toUpperCase()}</div>
-    </div>
-  )
+    </Link>
+  );
 }
 
 const Dashboard = () => {
-  const requests = [
-    { icon: Users, count: 3, label: "Model Account" },
-    { icon: IdCard, count: 3, label: "Model Bio" },
-    { icon: Info, count: 0, label: "Model Info" },
-    { icon: ImageIcon, count: 1, label: "Model Images" },
-    { icon: Play, count: 1, label: "Model Videos" },
-    { icon: Pencil, count: 1, label: "Model Measurements" },
-    { icon: Calendar, count: 1, label: "Events/Casting Calls" },
-    { icon: FileText, count: 0, label: "Timesheets" },
-    { icon: FileText, count: 3, label: "Blogs" },
-    { icon: FileText, count: 3, label: "Posts" },
-  ]
+  const [counts, setCounts] = useState<Record<string, number>>({});
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const response = await fetch("/api/dashboard/stats");
+        const data = await response.json();
+        if (data.status === "success") {
+          setCounts(data.counts);
+        }
+      } catch (error) {
+        console.error("Failed to fetch dashboard stats:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStats();
+  }, []);
+
+  // Map navigation items to dashboard keys
+  const getCount = (text: string) => {
+    switch (text) {
+      case "Model Account": return counts.modelAccount || 0;
+      case "Model Profile": return counts.modelProfile || 0;
+      case "Model Media": return counts.modelMedia || 0;
+      case "Model Measurement": return counts.modelMeasurement || 0;
+      case "Model Posts": return counts.modelPost || 0;
+      case "Timesheet": return counts.timesheet || 0;
+      case "Events": return counts.events || 0;
+      default: return 0;
+    }
+  };
+
+  // Skip "Dashboard" itself
+  const dashboardItems = navigation.filter((item) => item.text !== "Dashboard");
+
+  if (loading) {
+    return (
+      <div className="p-8 min-h-screen flex items-center justify-center">
+        <Loader2 className="w-10 h-10 animate-spin text-default" />
+      </div>
+    );
+  }
 
   return (
     <div className="p-8 min-h-screen">
       <h1 className="text-4xl mb-8 font-normal">Pending Request</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 max-w-full">
-        {requests.map((request, index) => (
-          <RequestCard key={index} {...request} />
+        {dashboardItems.map((item, index) => (
+          <RequestCard
+            key={index}
+            icon={item.icon}
+            count={getCount(item.text)}
+            label={item.text}
+            link={item.link}
+          />
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Dashboard;
