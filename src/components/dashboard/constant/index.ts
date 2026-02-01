@@ -49,6 +49,11 @@ const navigation: NavigationItem[] = [
     icon: Pencil,
   },
   {
+    link: "/admin/model-post",
+    text: "Model Posts",
+    icon: FileText,
+  },
+  {
     link: "/admin/timesheet",
     text: "Timesheet",
     icon: Calendar,
