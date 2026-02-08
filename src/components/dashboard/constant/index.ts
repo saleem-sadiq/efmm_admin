@@ -29,9 +29,13 @@ const navigation: NavigationItem[] = [
     icon: LayoutDashboardIcon,
   },
   {
-    link: "/admin/model-account",
+    link: "#",
     text: "Model Account",
     icon: UserRound,
+    submenu: [
+      { link: "/admin/model-account", text: "New Account Request" },
+      { link: "/admin/model-account/existing", text: "Existing Account" },
+    ],
   },
   {
     link: "/admin/model-profile",
@@ -59,9 +63,13 @@ const navigation: NavigationItem[] = [
     icon: Calendar,
   },
   {
-    link: "/admin/events",
+    link: "#",
     text: "Events",
     icon: BellRing,
+    submenu: [
+      { link: "/admin/events", text: "Manage Events" },
+      { link: "/admin/events/manage-models", text: "Manage Models" },
+    ],
   }
 ];
 

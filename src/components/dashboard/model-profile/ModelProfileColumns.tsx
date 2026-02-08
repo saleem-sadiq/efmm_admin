@@ -9,6 +9,13 @@ export type ProfileUpdate = {
   id: string;
   talent_id: string;
   name: string;
+  firstname: string;
+  lastname: string;
+  username: string;
+  email: string;
+  phone: string;
+  dob: string;
+  field_name: string;
   old_value: string;
   new_value: string;
   status_id: number;
@@ -37,6 +44,10 @@ export const modelProfileColumns: ColumnDef<ProfileUpdate>[] = [
   },
   {
     accessorKey: "name",
+    header: "Name",
+  },
+  {
+    accessorKey: "field_name",
     header: "Field Name",
   },
   {

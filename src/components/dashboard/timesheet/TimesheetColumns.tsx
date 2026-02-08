@@ -83,7 +83,7 @@ export const ActionProp: FC<ActionCellProps> = ({ prop, basePath }) => {
     <>
       <div className="space-x-2">
         <Button variant="default" className="bg-black">
-          <Link href={`${basePath}${prop.id}/edit-timesheet`}>Edit</Link>
+          <Link href={`${basePath}${prop.id}/edit-timesheet`}>Review</Link>
         </Button>
         {/* <Button variant="destructive" className="bg-red-600" onClick={() => setOpen(true)}>
           Delete

@@ -9,6 +9,12 @@ export type MediaUpdate = {
   id: string;
   talent_id: string;
   name: string;
+  firstname: string;
+  lastname: string;
+  username: string;
+  email: string;
+  phone: string;
+  dob: string;
   media_type: "image" | "video";
   file_name: string;
   video_url?: string;
@@ -39,6 +45,10 @@ export const modelProfileMediaColumns: ColumnDef<MediaUpdate>[] = [
   {
     accessorKey: "name",
     header: "Talent Name",
+  },
+  {
+    accessorKey: "username",
+    header: "Username",
   },
   {
     accessorKey: "media_type",

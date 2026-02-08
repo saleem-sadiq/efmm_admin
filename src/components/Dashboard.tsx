@@ -1,8 +1,16 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { navigation } from "./dashboard/constant";
-import { Loader2 } from "lucide-react";
+import {
+  BellRing,
+  Calendar,
+  FileText,
+  ImageIcon,
+  Pencil,
+  UserRound,
+  UserRoundPen,
+  Loader2,
+} from "lucide-react";
 
 import Link from "next/link";
 
@@ -54,10 +62,54 @@ const Dashboard = () => {
     fetchStats();
   }, []);
 
-  // Map navigation items to dashboard keys
+  const dashboardItems = [
+    {
+      text: "Model Pending Account",
+      link: "/admin/model-account",
+      icon: UserRound,
+    },
+    {
+      text: "Model Active Account",
+      link: "/admin/model-account/existing",
+      icon: UserRound,
+    },
+    {
+      text: "Model Profile",
+      link: "/admin/model-profile",
+      icon: UserRoundPen,
+    },
+    {
+      text: "Model Media",
+      link: "/admin/model-profile-media",
+      icon: ImageIcon,
+    },
+    {
+      text: "Model Measurement",
+      link: "/admin/model-measurement",
+      icon: Pencil,
+    },
+    {
+      text: "Model Posts",
+      link: "/admin/model-post",
+      icon: FileText,
+    },
+    {
+      text: "Timesheet",
+      link: "/admin/timesheet",
+      icon: Calendar,
+    },
+    {
+      text: "Events",
+      link: "/admin/events",
+      icon: BellRing,
+    },
+  ];
+
+  // Map items to counts
   const getCount = (text: string) => {
     switch (text) {
-      case "Model Account": return counts.modelAccount || 0;
+      case "Model Pending Account": return counts.modelPendingAccount || 0;
+      case "Model Active Account": return counts.modelActiveAccount || 0;
       case "Model Profile": return counts.modelProfile || 0;
       case "Model Media": return counts.modelMedia || 0;
       case "Model Measurement": return counts.modelMeasurement || 0;
@@ -67,9 +119,6 @@ const Dashboard = () => {
       default: return 0;
     }
   };
-
-  // Skip "Dashboard" itself
-  const dashboardItems = navigation.filter((item) => item.text !== "Dashboard");
 
   if (loading) {
     return (

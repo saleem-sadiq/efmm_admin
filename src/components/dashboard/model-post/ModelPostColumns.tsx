@@ -17,12 +17,16 @@ export type PostMedia = {
 export type ModelPost = {
     id: string;
     talent_id: string;
-    caption: string;
-    status_id: string;
-    created_at: string;
-    username: string;
+    name: string;
     firstname: string;
     lastname: string;
+    username: string;
+    email: string;
+    phone: string;
+    dob: string;
+    caption: string;
+    status_id: string;
+    submitted_at: string;
     media: PostMedia[];
 };
 
@@ -47,11 +51,12 @@ export const modelPostColumns: ColumnDef<ModelPost>[] = [
         header: "Talent ID",
     },
     {
-        header: "Talent Name",
-        cell: ({ row }) => {
-            const { firstname, lastname } = row.original;
-            return <span>{`${firstname} ${lastname}`}</span>;
-        },
+        accessorKey: "name",
+        header: "Name",
+    },
+    {
+        accessorKey: "username",
+        header: "Username",
     },
     {
         accessorKey: "caption",

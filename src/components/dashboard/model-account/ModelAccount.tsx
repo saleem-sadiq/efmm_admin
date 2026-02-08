@@ -5,11 +5,12 @@ import { Button } from "@/components/ui/button";
 import { ActionProp, ModelAccount, modelAccountColumns } from "./ModelAccountColumns";
 import ViewData from "../(tableView)/ViewData";
 
-async function getData(): Promise<
+async function getData(status?: number): Promise<
   ModelAccount[] | { error: string; details?: any }
 > {
   try {
-    const response = await fetch("/api/model-account/get-all-model-accounts");
+    const url = `/api/model-account/get-all-model-accounts${status ? `?status=${status}` : ""}`;
+    const response = await fetch(url);
 
     if (!response.ok) {
       let errorDetails;
@@ -31,7 +32,7 @@ async function getData(): Promise<
   }
 }
 
-const ModelAccountPage = () => {
+const ModelAccountPage = ({ title = "Model Accounts", filterStatus }: { title?: string, filterStatus?: number }) => {
   const [data, setData] = useState<ModelAccount[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -39,7 +40,7 @@ const ModelAccountPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const result = await getData();
+      const result = await getData(filterStatus);
       if ("error" in (result as any)) {
         setError((result as any).error);
       } else {
@@ -49,12 +50,12 @@ const ModelAccountPage = () => {
     };
 
     fetchData();
-  }, []);
+  }, [filterStatus]);
 
   if (loading) {
     return (
       <div className="mt-5 px-5">
-        <p className="text-36 font-semibold text-default">Model Accounts</p>
+        <p className="text-36 font-semibold text-default">{title}</p>
         <div className="text-center">Loading...</div>
       </div>
     );
@@ -63,7 +64,7 @@ const ModelAccountPage = () => {
   if (error) {
     return (
       <div className="mt-5 px-5">
-        <p className="text-36 font-semibold text-default">Model Accounts</p>
+        <p className="text-36 font-semibold text-default">{title}</p>
         <div className="text-center text-red-500">Error: {error}</div>
         <div className="text-center mt-4">
           <Button onClick={() => window.location.reload()}>Retry</Button>
@@ -74,12 +75,13 @@ const ModelAccountPage = () => {
 
   return (
     <div className="mt-5 px-5">
-      <p className="text-36 font-semibold text-default">Model Accounts</p>
+      <p className="text-36 font-semibold text-default">{title}</p>
       <ViewData
         columns={modelAccountColumns}
         data={data}
-        actionComponent={ActionProp}
+        actionComponent={filterStatus === 2 ? undefined : ActionProp}
         basePath="/admin/model-account/"
+        rowClickable={filterStatus !== 2}
       />
 
     </div>

@@ -48,6 +48,7 @@ type ViewDataProps<TData, TValue> = {
     basePath: string;
   }>;
   basePath: string;
+  rowClickable?: boolean;
 };
 
 const ViewData = <TData, TValue>({
@@ -56,6 +57,7 @@ const ViewData = <TData, TValue>({
   addButton,
   actionComponent: ActionComponent,
   basePath,
+  rowClickable = true,
 }: ViewDataProps<TData, TValue>) => {
   const [pagination, setPagination] = useState({
     pageIndex: 0,
@@ -100,6 +102,8 @@ const ViewData = <TData, TValue>({
     row: TData,
     e: React.MouseEvent<HTMLTableRowElement>
   ) => {
+    if (!rowClickable) return;
+
     const target = e.target as HTMLElement;
 
     // Check if the clicked element is within the action column or delete dialog overlay
@@ -189,9 +193,9 @@ const ViewData = <TData, TValue>({
                     {header.isPlaceholder
                       ? null
                       : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
                   </TableHead>
                 ))}
               </TableRow>
@@ -284,11 +288,10 @@ const ViewData = <TData, TValue>({
                       value == 0 ||
                       (1 && (
                         <span
-                          className={`px-2 py-1 rounded-full text-sm font-medium ${
-                            value == 1
+                          className={`px-2 py-1 rounded-full text-sm font-medium ${value == 1
                               ? "text-green-700 bg-green-100"
                               : "text-red-700 bg-red-100"
-                          }`}
+                            }`}
                         >
                           {value == 1 ? "Active" : "Disabled"}
                         </span>

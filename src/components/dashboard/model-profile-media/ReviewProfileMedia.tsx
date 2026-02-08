@@ -92,6 +92,14 @@ export default function ReviewProfileMedia({ id }: { id: string }) {
                             <p className="text-xl font-medium">{update.talent_id}</p>
                         </div>
                         <div>
+                            <p className="text-gray-400 text-sm">Name</p>
+                            <p className="text-xl font-medium">{update.name}</p>
+                        </div>
+                        <div>
+                            <p className="text-gray-400 text-sm">Username</p>
+                            <p className="text-xl font-medium">{update.username}</p>
+                        </div>
+                        <div>
                             <p className="text-gray-400 text-sm">Media Type</p>
                             <p className="text-xl font-medium text-default uppercase tracking-wider flex items-center gap-2">
                                 {update.media_type === "image" ? <ImageIcon size={20} /> : <Play size={20} />}
@@ -111,6 +119,10 @@ export default function ReviewProfileMedia({ id }: { id: string }) {
                                     update.status_id == 2 ? "Approved" :
                                         "Rejected"}
                             </p>
+                        </div>
+                        <div>
+                            <p className="text-gray-400 text-sm">Email</p>
+                            <p className="text-xl font-medium">{update.email}</p>
                         </div>
                         <div>
                             <p className="text-gray-400 text-sm">Submitted At</p>

@@ -77,36 +77,53 @@ export default function EditModelAccount({ id }: { id: string }) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
           <div className="space-y-4">
             <div>
-              <p className="text-gray-400 text-sm">Talent ID</p>
+              <p className="text-gray-400 text-sm font-light">Talent ID</p>
               <p className="text-xl font-medium">{model.talent_id}</p>
             </div>
             <div>
-              <p className="text-gray-400 text-sm">Full Name</p>
-              <p className="text-xl font-medium">{model.name}</p>
+              <p className="text-gray-400 text-sm font-light">Username</p>
+              <p className="text-xl font-medium">{model.username}</p>
             </div>
             <div>
-              <p className="text-gray-400 text-sm">Email Address</p>
+              <p className="text-gray-400 text-sm font-light">First Name</p>
+              <p className="text-xl font-medium">{model.firstname}</p>
+            </div>
+            <div>
+              <p className="text-gray-400 text-sm font-light">Last Name</p>
+              <p className="text-xl font-medium">{model.lastname}</p>
+            </div>
+            <div>
+              <p className="text-gray-400 text-sm font-light">Email Address</p>
               <p className="text-xl font-medium">{model.email}</p>
             </div>
           </div>
-          
+
           <div className="space-y-4">
-             <div>
-              <p className="text-gray-400 text-sm">Current Status</p>
-              <p className={`text-xl font-medium ${
-                model.status_id == 1 ? "text-blue-500" : 
-                model.status_id == 2 ? "text-green-500" : 
-                model.status_id == 3 ? "text-red-500" :
-                "text-gray-500"
-              }`}>
-                {model.status_id == 1 ? "Pending" : 
-                 model.status_id == 2 ? "Approved" : 
-                 model.status_id == 3 ? "Rejected" :
-                 "Unknown"}
+            <div>
+              <p className="text-gray-400 text-sm font-light">Phone Number</p>
+              <p className="text-xl font-medium">{model.phone}</p>
+            </div>
+            <div>
+              <p className="text-gray-400 text-sm font-light">Date of Birth</p>
+              <p className="text-xl font-medium">{model.dob}</p>
+            </div>
+            <div>
+              <p className="text-gray-400 text-sm font-light">Registered At</p>
+              <p className="text-xl font-medium">{model.created_at}</p>
+            </div>
+            <div>
+              <p className="text-gray-400 text-sm font-light">Current Status</p>
+              <p className={`text-xl font-medium ${model.status_id == 1 ? "text-blue-500" :
+                  model.status_id == 2 ? "text-green-500" :
+                    model.status_id == 3 ? "text-red-500" :
+                      "text-gray-500"
+                }`}>
+                {model.status_id == 1 ? "Pending" :
+                  model.status_id == 2 ? "Approved" :
+                    model.status_id == 3 ? "Rejected" :
+                      "Unknown"}
               </p>
             </div>
-
-
           </div>
         </div>
 

@@ -97,6 +97,10 @@ export default function ReviewPost({ id }: { id: string }) {
                             <p className="text-xl font-medium">{post.talent_id}</p>
                         </div>
                         <div>
+                            <p className="text-gray-400 text-sm">Name</p>
+                            <p className="text-xl font-medium">{post.name}</p>
+                        </div>
+                        <div>
                             <p className="text-gray-400 text-sm">Username</p>
                             <p className="text-xl font-medium text-default">@{post.username}</p>
                         </div>
@@ -115,8 +119,12 @@ export default function ReviewPost({ id }: { id: string }) {
                             </p>
                         </div>
                         <div>
+                            <p className="text-gray-400 text-sm">Email</p>
+                            <p className="text-xl font-medium">{post.email}</p>
+                        </div>
+                        <div>
                             <p className="text-gray-400 text-sm">Submitted At</p>
-                            <p className="text-xl font-medium">{post.created_at}</p>
+                            <p className="text-xl font-medium">{post.submitted_at}</p>
                         </div>
                     </div>
                 </div>

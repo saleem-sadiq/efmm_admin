@@ -21,7 +21,8 @@ export async function GET(request: Request) {
 
         // Define all backend endpoints to fetch counts from
         const endpoints = {
-            modelAccount: `${backendDomain}/admin/model_account/getModelAccounts.php`,
+            modelPendingAccount: `${backendDomain}/admin/model_account/getModelAccounts.php?id=1`,
+            modelActiveAccount: `${backendDomain}/admin/model_account/getModelAccounts.php?id=2`,
             modelProfile: `${backendDomain}/admin/model_profile/getAllPendingUpdates.php`,
             modelMedia: `${backendDomain}/admin/model_profile_media/getAllPendingMedia.php`,
             modelMeasurement: `${backendDomain}/admin/model_measurement/getAllPendingMeasurements.php`,
@@ -37,7 +38,8 @@ export async function GET(request: Request) {
                 const data = await response.json();
 
                 // Return length based on expected data structure for each endpoint
-                if (key === 'modelAccount') return (data.data || []).length;
+                if (key === 'modelPendingAccount') return (data.data || []).length;
+                if (key === 'modelActiveAccount') return (data.data || []).length;
                 if (key === 'modelProfile') return (data.data || []).length;
                 if (key === 'modelMedia') return (data.data || []).length;
                 if (key === 'modelMeasurement') return (data.data || []).length;
@@ -53,7 +55,8 @@ export async function GET(request: Request) {
         };
 
         const [
-            modelAccountCount,
+            modelPendingAccountCount,
+            modelActiveAccountCount,
             modelProfileCount,
             modelMediaCount,
             modelMeasurementCount,
@@ -61,7 +64,8 @@ export async function GET(request: Request) {
             timesheetCount,
             eventsCount
         ] = await Promise.all([
-            fetchCount(endpoints.modelAccount, 'modelAccount'),
+            fetchCount(endpoints.modelPendingAccount, 'modelPendingAccount'),
+            fetchCount(endpoints.modelActiveAccount, 'modelActiveAccount'),
             fetchCount(endpoints.modelProfile, 'modelProfile'),
             fetchCount(endpoints.modelMedia, 'modelMedia'),
             fetchCount(endpoints.modelMeasurement, 'modelMeasurement'),
@@ -73,7 +77,8 @@ export async function GET(request: Request) {
         return NextResponse.json({
             status: "success",
             counts: {
-                modelAccount: modelAccountCount,
+                modelPendingAccount: modelPendingAccountCount,
+                modelActiveAccount: modelActiveAccountCount,
                 modelProfile: modelProfileCount,
                 modelMedia: modelMediaCount,
                 modelMeasurement: modelMeasurementCount,

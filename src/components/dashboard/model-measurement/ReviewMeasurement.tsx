@@ -91,7 +91,15 @@ export default function ReviewMeasurement({ id }: { id: string }) {
                     <div className="space-y-4">
                         <div>
                             <p className="text-gray-400 text-sm">Talent</p>
-                            <p className="text-xl font-medium">{update.firstname} {update.lastname} ({update.talent_id})</p>
+                            <p className="text-xl font-medium">{update.talent_id}</p>
+                        </div>
+                        <div>
+                            <p className="text-gray-400 text-sm">Name</p>
+                            <p className="text-xl font-medium">{update.name}</p>
+                        </div>
+                        <div>
+                            <p className="text-gray-400 text-sm">Username</p>
+                            <p className="text-xl font-medium">{update.username}</p>
                         </div>
                         <div>
                             <p className="text-gray-400 text-sm">Measurement Type</p>
@@ -112,6 +120,10 @@ export default function ReviewMeasurement({ id }: { id: string }) {
                                     update.status_id == 2 ? "Approved" :
                                         "Rejected"}
                             </p>
+                        </div>
+                        <div>
+                            <p className="text-gray-400 text-sm">Email</p>
+                            <p className="text-xl font-medium">{update.email}</p>
                         </div>
                         <div>
                             <p className="text-gray-400 text-sm">Submitted At</p>

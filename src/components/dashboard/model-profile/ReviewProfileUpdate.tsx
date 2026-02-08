@@ -93,6 +93,10 @@ export default function ReviewProfileUpdate({ id }: { id: string }) {
               <p className="text-xl font-medium">{update.talent_id}</p>
             </div>
             <div>
+              <p className="text-gray-400 text-sm">Name</p>
+              <p className="text-xl font-medium">{update.name}</p>
+            </div>
+            <div>
               <p className="text-gray-400 text-sm">Field Being Updated</p>
               <p className="text-xl font-medium text-default uppercase tracking-wider">{update.field_name}</p>
             </div>
@@ -110,6 +114,10 @@ export default function ReviewProfileUpdate({ id }: { id: string }) {
                  update.status_id == 2 ? "Approved" : 
                  "Rejected"}
               </p>
+            </div>
+            <div>
+              <p className="text-gray-400 text-sm">Email</p>
+              <p className="text-xl font-medium">{update.email}</p>
             </div>
             <div>
               <p className="text-gray-400 text-sm">Submitted At</p>

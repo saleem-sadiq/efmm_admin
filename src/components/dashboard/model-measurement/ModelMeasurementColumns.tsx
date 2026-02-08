@@ -8,13 +8,17 @@ import Link from "next/link";
 export type MeasurementUpdate = {
     id: string;
     talent_id: string;
+    name: string;
+    firstname: string;
+    lastname: string;
+    username: string;
+    email: string;
+    phone: string;
+    dob: string;
     file_name: string;
     measurement_type: string;
     status_id: number;
     submitted_at: string;
-    talent_name: string;
-    firstname: string;
-    lastname: string;
 };
 
 type ActionCellProps = {
@@ -38,12 +42,14 @@ export const modelMeasurementColumns: ColumnDef<MeasurementUpdate>[] = [
         header: "Talent ID",
     },
     {
+        accessorKey: "name",
         header: "Name",
-        cell: ({ row }) => {
-            const { firstname, lastname } = row.original;
-            return <span>{`${firstname} ${lastname}`}</span>;
-        },
     },
+    {
+        accessorKey: "username",
+        header: "Username",
+    },
+
     {
         accessorKey: "measurement_type",
         header: "Measurement",

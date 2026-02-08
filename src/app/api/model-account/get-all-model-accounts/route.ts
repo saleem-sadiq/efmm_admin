@@ -20,8 +20,11 @@ export async function GET(request: Request) {
             );
         }
 
+        const { searchParams } = new URL(request.url);
+        const status = searchParams.get("status");
+
         const response = await fetchWithAuth(
-            `${backendDomain}/admin/model_account/getModelAccounts.php`,
+            `${backendDomain}/admin/model_account/getModelAccounts.php${status ? `?id=${status}` : ""}`,
             {
                 method: "GET",
                 cache: "no-store",
