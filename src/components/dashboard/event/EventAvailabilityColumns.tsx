@@ -19,8 +19,9 @@ export type EventAvailability = {
     status: string;
 };
 
-const BookModelButton = ({ talentId, eventId }: { talentId: string, eventId: string }) => {
+const BookModelButton = ({ talentId, eventId, status }: { talentId: string, eventId: string, status: string }) => {
     const [loading, setLoading] = useState(false);
+    const isBooked = status.toLowerCase() === "booked";
 
     const handleBook = async () => {
         setLoading(true);
@@ -46,10 +47,10 @@ const BookModelButton = ({ talentId, eventId }: { talentId: string, eventId: str
     return (
         <Button
             onClick={(e) => { e.stopPropagation(); handleBook(); }}
-            disabled={loading}
-            className="bg-green-600 hover:bg-green-700 text-white text-xs h-8 px-4"
+            disabled={loading || isBooked}
+            className={`${isBooked ? 'bg-gray-500 hover:bg-gray-500' : 'bg-green-600 hover:bg-green-700'} text-white text-xs h-8 px-4`}
         >
-            {loading ? <Loader2 className="animate-spin w-4 h-4" /> : "Book Model"}
+            {loading ? <Loader2 className="animate-spin w-4 h-4" /> : (isBooked ? "Booked" : "Book Model")}
         </Button>
     );
 };
@@ -108,7 +109,7 @@ export const getEventAvailabilityColumns = (eventId: string): ColumnDef<EventAva
         id: "actions",
         header: "Actions",
         cell: ({ row }) => {
-            return <BookModelButton talentId={row.original.talent_id} eventId={eventId} />;
+            return <BookModelButton talentId={row.original.talent_id} eventId={eventId} status={row.original.status} />;
         }
     }
 ];

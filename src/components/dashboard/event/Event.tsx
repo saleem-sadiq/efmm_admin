@@ -45,7 +45,8 @@ const Page = () => {
       if ("error" in (result as any)) {
         setError((result as any).error);
       } else {
-        setData(result as Event[]);
+        const sortedEvents = (result as Event[]).sort((a, b) => b.id - a.id);
+        setData(sortedEvents);
       }
       setLoading(false);
     };
