@@ -103,6 +103,11 @@ const Dashboard = () => {
       link: "/admin/events",
       icon: BellRing,
     },
+    {
+      text: "Model Inquiries",
+      link: "/admin/model-inquiry",
+      icon: UserRound,
+    },
   ];
 
   // Map items to counts
@@ -116,6 +121,7 @@ const Dashboard = () => {
       case "Model Posts": return counts.modelPost || 0;
       case "Timesheet": return counts.timesheet || 0;
       case "Events": return counts.events || 0;
+      case "Model Inquiries": return counts.modelInquiry || 0;
       default: return 0;
     }
   };

@@ -63,6 +63,11 @@ const navigation: NavigationItem[] = [
     icon: Calendar,
   },
   {
+    link: "/admin/model-inquiry",
+    text: "Model Inquiries",
+    icon: UserRound,
+  },
+  {
     link: "#",
     text: "Events",
     icon: BellRing,

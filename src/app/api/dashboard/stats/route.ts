@@ -28,7 +28,8 @@ export async function GET(request: Request) {
             modelMeasurement: `${backendDomain}/admin/model_measurement/getAllPendingMeasurements.php`,
             modelPost: `${backendDomain}/admin/model_post/getAllPendingPosts.php`,
             timesheet: `${backendDomain}/admin/timesheet/getAllTimesheets.php`,
-            events: `${backendDomain}/admin/event/getEvents.php`
+            events: `${backendDomain}/admin/event/getEvents.php`,
+            inquiries: `${backendDomain}/admin/inquiry/getAllInquiries.php`
         };
 
         const fetchCount = async (url: string, key: string) => {
@@ -46,6 +47,7 @@ export async function GET(request: Request) {
                 if (key === 'modelPost') return (data.data || []).length;
                 if (key === 'timesheet') return (data.timesheets || []).length;
                 if (key === 'events') return (data.events || []).length;
+                if (key === 'inquiries') return (data.data || []).length;
 
                 return 0;
             } catch (error) {
@@ -62,7 +64,8 @@ export async function GET(request: Request) {
             modelMeasurementCount,
             modelPostCount,
             timesheetCount,
-            eventsCount
+            eventsCount,
+            inquiriesCount
         ] = await Promise.all([
             fetchCount(endpoints.modelPendingAccount, 'modelPendingAccount'),
             fetchCount(endpoints.modelActiveAccount, 'modelActiveAccount'),
@@ -71,7 +74,8 @@ export async function GET(request: Request) {
             fetchCount(endpoints.modelMeasurement, 'modelMeasurement'),
             fetchCount(endpoints.modelPost, 'modelPost'),
             fetchCount(endpoints.timesheet, 'timesheet'),
-            fetchCount(endpoints.events, 'events')
+            fetchCount(endpoints.events, 'events'),
+            fetchCount(endpoints.inquiries, 'inquiries')
         ]);
 
         return NextResponse.json({
@@ -84,7 +88,8 @@ export async function GET(request: Request) {
                 modelMeasurement: modelMeasurementCount,
                 modelPost: modelPostCount,
                 timesheet: timesheetCount,
-                events: eventsCount
+                events: eventsCount,
+                modelInquiry: inquiriesCount
             }
         });
 
