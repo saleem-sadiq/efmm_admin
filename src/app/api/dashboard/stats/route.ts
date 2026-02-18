@@ -30,7 +30,8 @@ export async function GET(request: Request) {
             timesheet: `${backendDomain}/admin/timesheet/getAllTimesheets.php`,
             events: `${backendDomain}/admin/event/getEvents.php`,
             inquiries: `${backendDomain}/admin/inquiry/getAllInquiries.php`,
-            reviews: `${backendDomain}/admin/review/getAllReviews.php`
+            reviews: `${backendDomain}/admin/review/getAllReviews.php`,
+            castings: `${backendDomain}/admin/casting/getAllCastingRequests.php`
         };
 
         const fetchCount = async (url: string, key: string) => {
@@ -50,6 +51,7 @@ export async function GET(request: Request) {
                 if (key === 'events') return (data.events || []).length;
                 if (key === 'inquiries') return (data.data || []).length;
                 if (key === 'reviews') return (data.data || []).length;
+                if (key === 'castings') return (data.data || []).length;
 
                 return 0;
             } catch (error) {
@@ -68,7 +70,8 @@ export async function GET(request: Request) {
             timesheetCount,
             eventsCount,
             inquiriesCount,
-            reviewsCount
+            reviewsCount,
+            castingsCount
         ] = await Promise.all([
             fetchCount(endpoints.modelPendingAccount, 'modelPendingAccount'),
             fetchCount(endpoints.modelActiveAccount, 'modelActiveAccount'),
@@ -79,7 +82,8 @@ export async function GET(request: Request) {
             fetchCount(endpoints.timesheet, 'timesheet'),
             fetchCount(endpoints.events, 'events'),
             fetchCount(endpoints.inquiries, 'inquiries'),
-            fetchCount(endpoints.reviews, 'reviews')
+            fetchCount(endpoints.reviews, 'reviews'),
+            fetchCount(endpoints.castings, 'castings')
         ]);
 
         return NextResponse.json({
@@ -94,7 +98,8 @@ export async function GET(request: Request) {
                 timesheet: timesheetCount,
                 events: eventsCount,
                 modelInquiry: inquiriesCount,
-                modelReview: reviewsCount
+                modelReview: reviewsCount,
+                modelCasting: castingsCount
             }
         });
 

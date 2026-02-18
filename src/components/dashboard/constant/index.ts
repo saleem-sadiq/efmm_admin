@@ -74,6 +74,11 @@ const navigation: NavigationItem[] = [
     icon: Star,
   },
   {
+    link: "/admin/model-casting",
+    text: "Model Castings",
+    icon: Cast,
+  },
+  {
     link: "#",
     text: "Events",
     icon: BellRing,

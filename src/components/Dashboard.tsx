@@ -10,6 +10,7 @@ import {
   UserRound,
   UserRoundPen,
   Star,
+  Cast,
   Loader2,
 } from "lucide-react";
 
@@ -114,6 +115,11 @@ const Dashboard = () => {
       link: "/admin/model-review",
       icon: Star,
     },
+    {
+      text: "Model Castings",
+      link: "/admin/model-casting",
+      icon: Cast,
+    },
   ];
 
   // Map items to counts
@@ -129,6 +135,7 @@ const Dashboard = () => {
       case "Events": return counts.events || 0;
       case "Model Inquiries": return counts.modelInquiry || 0;
       case "Model Reviews": return counts.modelReview || 0;
+      case "Model Castings": return counts.modelCasting || 0;
       default: return 0;
     }
   };
