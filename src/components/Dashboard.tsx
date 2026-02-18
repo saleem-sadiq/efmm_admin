@@ -9,6 +9,7 @@ import {
   Pencil,
   UserRound,
   UserRoundPen,
+  Star,
   Loader2,
 } from "lucide-react";
 
@@ -108,6 +109,11 @@ const Dashboard = () => {
       link: "/admin/model-inquiry",
       icon: UserRound,
     },
+    {
+      text: "Model Reviews",
+      link: "/admin/model-review",
+      icon: Star,
+    },
   ];
 
   // Map items to counts
@@ -122,6 +128,7 @@ const Dashboard = () => {
       case "Timesheet": return counts.timesheet || 0;
       case "Events": return counts.events || 0;
       case "Model Inquiries": return counts.modelInquiry || 0;
+      case "Model Reviews": return counts.modelReview || 0;
       default: return 0;
     }
   };

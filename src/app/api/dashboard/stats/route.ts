@@ -29,7 +29,8 @@ export async function GET(request: Request) {
             modelPost: `${backendDomain}/admin/model_post/getAllPendingPosts.php`,
             timesheet: `${backendDomain}/admin/timesheet/getAllTimesheets.php`,
             events: `${backendDomain}/admin/event/getEvents.php`,
-            inquiries: `${backendDomain}/admin/inquiry/getAllInquiries.php`
+            inquiries: `${backendDomain}/admin/inquiry/getAllInquiries.php`,
+            reviews: `${backendDomain}/admin/review/getAllReviews.php`
         };
 
         const fetchCount = async (url: string, key: string) => {
@@ -48,6 +49,7 @@ export async function GET(request: Request) {
                 if (key === 'timesheet') return (data.timesheets || []).length;
                 if (key === 'events') return (data.events || []).length;
                 if (key === 'inquiries') return (data.data || []).length;
+                if (key === 'reviews') return (data.data || []).length;
 
                 return 0;
             } catch (error) {
@@ -65,7 +67,8 @@ export async function GET(request: Request) {
             modelPostCount,
             timesheetCount,
             eventsCount,
-            inquiriesCount
+            inquiriesCount,
+            reviewsCount
         ] = await Promise.all([
             fetchCount(endpoints.modelPendingAccount, 'modelPendingAccount'),
             fetchCount(endpoints.modelActiveAccount, 'modelActiveAccount'),
@@ -75,7 +78,8 @@ export async function GET(request: Request) {
             fetchCount(endpoints.modelPost, 'modelPost'),
             fetchCount(endpoints.timesheet, 'timesheet'),
             fetchCount(endpoints.events, 'events'),
-            fetchCount(endpoints.inquiries, 'inquiries')
+            fetchCount(endpoints.inquiries, 'inquiries'),
+            fetchCount(endpoints.reviews, 'reviews')
         ]);
 
         return NextResponse.json({
@@ -89,7 +93,8 @@ export async function GET(request: Request) {
                 modelPost: modelPostCount,
                 timesheet: timesheetCount,
                 events: eventsCount,
-                modelInquiry: inquiriesCount
+                modelInquiry: inquiriesCount,
+                modelReview: reviewsCount
             }
         });
 

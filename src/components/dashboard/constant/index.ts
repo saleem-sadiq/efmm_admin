@@ -10,6 +10,7 @@ import {
   LayoutDashboardIcon,
   Link2,
   Pencil,
+  Star,
   UserRound,
   UserRoundPen,
   UsersRound,
@@ -66,6 +67,11 @@ const navigation: NavigationItem[] = [
     link: "/admin/model-inquiry",
     text: "Model Inquiries",
     icon: UserRound,
+  },
+  {
+    link: "/admin/model-review",
+    text: "Model Reviews",
+    icon: Star,
   },
   {
     link: "#",
