@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import ViewData from "../(tableView)/ViewData";
-import { modelCastingColumns, ModelCasting } from "./ModelCastingColumns";
+import { modelCastingColumns, ModelCasting, ActionProp } from "./ModelCastingColumns";
 
 const ModelCastingPage = () => {
     const [data, setData] = useState<ModelCasting[]>([]);
@@ -59,6 +59,7 @@ const ModelCastingPage = () => {
                     data={data}
                     basePath="/admin/model-casting"
                     rowClickable={true}
+                    actionComponent={ActionProp}
                 />
             </div>
         </div>

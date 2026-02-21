@@ -20,6 +20,88 @@ export type ModelCasting = {
     created_at: string;
 };
 
+import { FC, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
+
+type ActionCellProps = {
+    prop: ModelCasting;
+    basePath: string;
+};
+
+export const ActionProp: FC<ActionCellProps> = ({ prop }) => {
+    const [isLoading, setIsLoading] = useState(false);
+
+    const handleUpdateStatus = async (newStatus: number) => {
+        setIsLoading(true);
+        try {
+            const response = await fetch("/api/model-casting/update-status", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ casting_id: prop.id, status_id: newStatus }),
+            });
+
+            const data = await response.json();
+            if (response.ok && data.status === "success") {
+                toast.success("Status updated successfully!");
+                window.location.reload();
+            } else {
+                toast.error(data.message || "Failed to update status");
+            }
+        } catch (error) {
+            toast.error("An error occurred");
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    return (
+        <div className="flex gap-2">
+            {prop.status_id == 1 && (
+                <>
+                    <Button
+                        onClick={() => handleUpdateStatus(2)}
+                        disabled={isLoading}
+                        className="bg-green-600 hover:bg-green-700 text-white"
+                    >
+                        {isLoading ? <Loader2 className="animate-spin w-4 h-4 mr-2" /> : null}
+                        Confirmed
+                    </Button>
+                    <Button
+                        onClick={() => handleUpdateStatus(3)}
+                        disabled={isLoading}
+                        className="bg-red-600 hover:bg-red-700 text-white"
+                    >
+                        {isLoading ? <Loader2 className="animate-spin w-4 h-4 mr-2" /> : null}
+                        Cancelled
+                    </Button>
+                </>
+            )}
+            {prop.status_id == 2 && (
+                <Button
+                    onClick={() => handleUpdateStatus(3)}
+                    disabled={isLoading}
+                    className="bg-red-600 hover:bg-red-700 text-white"
+                >
+                    {isLoading ? <Loader2 className="animate-spin w-4 h-4 mr-2" /> : null}
+                    Cancelled
+                </Button>
+            )}
+            {prop.status_id == 3 && (
+                <Button
+                    onClick={() => handleUpdateStatus(2)}
+                    disabled={isLoading}
+                    className="bg-green-600 hover:bg-green-700 text-white"
+                >
+                    {isLoading ? <Loader2 className="animate-spin w-4 h-4 mr-2" /> : null}
+                    Confirmed
+                </Button>
+            )}
+        </div>
+    );
+};
+
 export const modelCastingColumns: ColumnDef<ModelCasting>[] = [
     {
         accessorKey: "id",
@@ -50,7 +132,7 @@ export const modelCastingColumns: ColumnDef<ModelCasting>[] = [
             let statusClass = "bg-yellow-100 text-yellow-700";
 
             if (status == 2) {
-                statusText = "Processed";
+                statusText = "Confirmed";
                 statusClass = "bg-green-100 text-green-700";
             } else if (status == 3) {
                 statusText = "Cancelled";

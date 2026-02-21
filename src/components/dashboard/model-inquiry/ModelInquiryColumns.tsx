@@ -52,24 +52,65 @@ export const ActionProp: FC<ActionCellProps> = ({ prop }) => {
 
     return (
         <div className="flex gap-2">
-            {prop.status_id == "1" ? (
-                <Button
-                    onClick={() => handleUpdateStatus(2)}
-                    disabled={isLoading}
-                    className="bg-green-600 hover:bg-green-700 text-white"
-                >
-                    {isLoading ? <Loader2 className="animate-spin w-4 h-4 mr-2" /> : null}
-                    Mark as Processed
-                </Button>
-            ) : (
-                <Button
-                    onClick={() => handleUpdateStatus(1)}
-                    disabled={isLoading}
-                    className="bg-yellow-600 hover:bg-yellow-700 text-white"
-                >
-                    {isLoading ? <Loader2 className="animate-spin w-4 h-4 mr-2" /> : null}
-                    Move to Processed
-                </Button>
+            {prop.status_id == "1" && (
+                <>
+                    <Button
+                        onClick={() => handleUpdateStatus(2)}
+                        disabled={isLoading}
+                        className="bg-green-600 hover:bg-green-700 text-white"
+                    >
+                        {isLoading ? <Loader2 className="animate-spin w-4 h-4 mr-2" /> : null}
+                        Available
+                    </Button>
+                    <Button
+                        onClick={() => handleUpdateStatus(3)}
+                        disabled={isLoading}
+                        className="bg-red-600 hover:bg-red-700 text-white"
+                    >
+                        {isLoading ? <Loader2 className="animate-spin w-4 h-4 mr-2" /> : null}
+                        Unavailable
+                    </Button>
+                </>
+            )}
+            {prop.status_id == "2" && (
+                <>
+                    <Button
+                        onClick={() => handleUpdateStatus(1)}
+                        disabled={isLoading}
+                        className="bg-yellow-600 hover:bg-yellow-700 text-white"
+                    >
+                        {isLoading ? <Loader2 className="animate-spin w-4 h-4 mr-2" /> : null}
+                        Pending
+                    </Button>
+                    <Button
+                        onClick={() => handleUpdateStatus(3)}
+                        disabled={isLoading}
+                        className="bg-red-600 hover:bg-red-700 text-white"
+                    >
+                        {isLoading ? <Loader2 className="animate-spin w-4 h-4 mr-2" /> : null}
+                        Unavailable
+                    </Button>
+                </>
+            )}
+            {prop.status_id == "3" && (
+                <>
+                    <Button
+                        onClick={() => handleUpdateStatus(1)}
+                        disabled={isLoading}
+                        className="bg-yellow-600 hover:bg-yellow-700 text-white"
+                    >
+                        {isLoading ? <Loader2 className="animate-spin w-4 h-4 mr-2" /> : null}
+                        Pending
+                    </Button>
+                    <Button
+                        onClick={() => handleUpdateStatus(2)}
+                        disabled={isLoading}
+                        className="bg-green-600 hover:bg-green-700 text-white"
+                    >
+                        {isLoading ? <Loader2 className="animate-spin w-4 h-4 mr-2" /> : null}
+                        Available
+                    </Button>
+                </>
             )}
         </div>
     );
@@ -105,10 +146,20 @@ export const modelInquiryColumns: ColumnDef<ModelInquiry>[] = [
         header: "Status",
         cell: ({ row }) => {
             const status = row.original.status_id;
+            let statusText = "Pending";
+            let statusClass = "bg-yellow-100 text-yellow-700";
+
+            if (status == "2") {
+                statusText = "Available";
+                statusClass = "bg-green-100 text-green-700";
+            } else if (status == "3") {
+                statusText = "Unavailable";
+                statusClass = "bg-red-100 text-red-700";
+            }
+
             return (
-                <span className={`px-2 py-1 rounded-full text-xs font-medium ${status == "1" ? "bg-yellow-100 text-yellow-700" : "bg-green-100 text-green-700"
-                    }`}>
-                    {status == "1" ? "Pending" : "Processed"}
+                <span className={`px-2 py-1 rounded-full text-xs font-medium ${statusClass}`}>
+                    {statusText}
                 </span>
             );
         }
