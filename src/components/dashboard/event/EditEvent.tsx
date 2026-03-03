@@ -30,19 +30,15 @@ import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
 
 const eventSchema = z.object({
-    event_name: z.string().min(1, "Event name is required"),
-    event_desc: z.string().min(1, "Description is required"),
-    event_location: z.string().min(1, "Location is required"),
-    event_req: z.string().min(1, "Requirements are required"),
-    talent_rate: z.string().min(1, "Talent rate is required"),
-    event_date_start: z.date({
-        required_error: "Start date is required",
-    }),
-    event_date_end: z.date({
-        required_error: "End date is required",
-    }),
-    event_time_start: z.string().min(1, "Start time is required"),
-    event_time_end: z.string().min(1, "End time is required"),
+    event_name: z.string().optional(),
+    event_desc: z.string().optional(),
+    event_location: z.string().optional(),
+    event_req: z.string().optional(),
+    talent_rate: z.string().optional(),
+    event_date_start: z.date().optional(),
+    event_date_end: z.date().optional(),
+    event_time_start: z.string().optional(),
+    event_time_end: z.string().optional(),
 });
 
 type EventFormValues = z.infer<typeof eventSchema>;
@@ -99,8 +95,8 @@ export default function EditEvent({ id }: EditEventProps) {
                         event_location: event.location || "",
                         event_req: event.requirements || "",
                         talent_rate: event.talent_rate || "",
-                        event_date_start: parseISO(event.date_start),
-                        event_date_end: parseISO(event.date_end),
+                        event_date_start: event.date_start ? parseISO(event.date_start) : undefined,
+                        event_date_end: event.date_end ? parseISO(event.date_end) : undefined,
                         event_time_start: convertTo24Hour(event.time_start),
                         event_time_end: convertTo24Hour(event.time_end),
                     });
@@ -123,8 +119,8 @@ export default function EditEvent({ id }: EditEventProps) {
             const payload = {
                 id,
                 ...values,
-                event_date_start: format(values.event_date_start, "yyyy-MM-dd"),
-                event_date_end: format(values.event_date_end, "yyyy-MM-dd"),
+                event_date_start: values.event_date_start ? format(values.event_date_start, "yyyy-MM-dd") : "",
+                event_date_end: values.event_date_end ? format(values.event_date_end, "yyyy-MM-dd") : "",
             };
 
             const response = await fetch("/api/event/edit-event", {

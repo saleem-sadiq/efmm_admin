@@ -31,6 +31,15 @@ const navigation: NavigationItem[] = [
   },
   {
     link: "#",
+    text: "Events",
+    icon: BellRing,
+    submenu: [
+      { link: "/admin/events", text: "Manage Events" },
+      { link: "/admin/events/manage-models", text: "Manage Models" },
+    ],
+  },
+  {
+    link: "#",
     text: "Model Account",
     icon: UserRound,
     submenu: [
@@ -75,17 +84,8 @@ const navigation: NavigationItem[] = [
   },
   {
     link: "/admin/model-casting",
-    text: "Model Castings",
+    text: "Casting Appointments",
     icon: Cast,
-  },
-  {
-    link: "#",
-    text: "Events",
-    icon: BellRing,
-    submenu: [
-      { link: "/admin/events", text: "Manage Events" },
-      { link: "/admin/events/manage-models", text: "Manage Models" },
-    ],
   }
 ];
 

@@ -29,19 +29,16 @@ import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
 
 const eventSchema = z.object({
-  event_name: z.string().min(1, "Event name is required"),
-  event_desc: z.string().min(1, "Description is required"),
-  event_location: z.string().min(1, "Location is required"),
-  event_req: z.string().min(1, "Requirements are required"),
-  talent_rate: z.string().min(1, "Talent rate is required"),
-  event_date_start: z.date({
-    required_error: "Start date is required",
-  }),
-  event_date_end: z.date({
-    required_error: "End date is required",
-  }),
-  event_time_start: z.string().min(1, "Start time is required"),
-  event_time_end: z.string().min(1, "End time is required"),
+  event_name: z.string().optional(),
+  event_desc: z.string().optional(),
+  event_location: z.string().optional(),
+  event_req: z.string().optional(),
+  talent_rate: z.string().optional(),
+  event_date_start: z.date().optional(),
+  event_date_end: z.date().optional(),
+  event_time_start: z.string().optional(),
+  event_time_end: z.string().optional(),
+  onsite_casting_date: z.string().optional(),
 });
 
 type EventFormValues = z.infer<typeof eventSchema>;
@@ -60,6 +57,7 @@ export default function AddEvent() {
       talent_rate: "",
       event_time_start: "",
       event_time_end: "",
+      onsite_casting_date: ""
     },
   });
 
@@ -68,8 +66,8 @@ export default function AddEvent() {
     try {
       const payload = {
         ...values,
-        event_date_start: format(values.event_date_start, "yyyy-MM-dd"),
-        event_date_end: format(values.event_date_end, "yyyy-MM-dd"),
+        event_date_start: values.event_date_start ? format(values.event_date_start, "yyyy-MM-dd") : "",
+        event_date_end: values.event_date_end ? format(values.event_date_end, "yyyy-MM-dd") : "",
       };
 
       const response = await fetch("/api/event/add-event", {
@@ -100,7 +98,7 @@ export default function AddEvent() {
     <div className="mt-5 px-5">
       <div className="max-w-4xl mx-auto bg-blackfade p-8 rounded-lg shadow-xl text-white">
         <h2 className="text-36 font-semibold mb-8">Add New Event</h2>
-        
+
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -167,6 +165,24 @@ export default function AddEvent() {
                   <FormControl>
                     <Textarea
                       placeholder="Special requirements for talent..."
+                      className="bg-blackfade2 border-gray-700 min-h-[80px]"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="onsite_casting_date"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Onsite Casting Date</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder="On site Casting Date ..."
                       className="bg-blackfade2 border-gray-700 min-h-[80px]"
                       {...field}
                     />
@@ -322,8 +338,8 @@ export default function AddEvent() {
             </div>
 
             <div className="flex justify-end pt-4">
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
                 className="bg-white text-black hover:bg-gray-200 min-w-[150px]"
                 disabled={loading}
               >

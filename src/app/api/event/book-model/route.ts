@@ -7,14 +7,7 @@ export async function POST(request: Request) {
         const backendDomain = process.env.BACKEND_DOMAIN;
         const cookieStore = await cookies();
         const body = await request.json();
-        const { talent_id, event_id } = body;
-
-        if (!talent_id || !event_id) {
-            return NextResponse.json(
-                { status: "error", message: "talent_id and event_id are required" },
-                { status: 400 }
-            );
-        }
+        const { talent_id, event_id, availability_id, status_id } = body;
 
         const token =
             request.headers.get("authorization")?.replace("Bearer ", "") ||
@@ -33,7 +26,7 @@ export async function POST(request: Request) {
             {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ talent_id, event_id }),
+                body: JSON.stringify({ talent_id, event_id, availability_id, status_id }),
             },
             token
         );
