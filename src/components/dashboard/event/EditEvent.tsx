@@ -39,6 +39,7 @@ const eventSchema = z.object({
     event_date_end: z.date().optional(),
     event_time_start: z.string().optional(),
     event_time_end: z.string().optional(),
+    onsite_casting_date: z.string().optional(),
 });
 
 type EventFormValues = z.infer<typeof eventSchema>;
@@ -62,8 +63,20 @@ export default function EditEvent({ id }: EditEventProps) {
             talent_rate: "",
             event_time_start: "",
             event_time_end: "",
+            onsite_casting_date: "",
         },
     });
+
+    const parseCustomDate = (dateStr: string) => {
+        if (!dateStr) return "";
+        if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return dateStr;
+        const parts = dateStr.split('/');
+        if (parts.length === 3) {
+            const [day, month, year] = parts;
+            return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+        }
+        return dateStr;
+    };
 
     const convertTo24Hour = (timeStr: string) => {
         if (!timeStr) return "";
@@ -99,6 +112,7 @@ export default function EditEvent({ id }: EditEventProps) {
                         event_date_end: event.date_end ? parseISO(event.date_end) : undefined,
                         event_time_start: convertTo24Hour(event.time_start),
                         event_time_end: convertTo24Hour(event.time_end),
+                        onsite_casting_date: parseCustomDate(event.onsite_casting_date),
                     });
                 } else {
                     toast.error(data.message || "Failed to load event details");
@@ -121,6 +135,7 @@ export default function EditEvent({ id }: EditEventProps) {
                 ...values,
                 event_date_start: values.event_date_start ? format(values.event_date_start, "yyyy-MM-dd") : "",
                 event_date_end: values.event_date_end ? format(values.event_date_end, "yyyy-MM-dd") : "",
+                onsite_casting_date: values.onsite_casting_date || "",
             };
 
             const response = await fetch("/api/event/edit-event", {
@@ -296,7 +311,7 @@ export default function EditEvent({ id }: EditEventProps) {
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                             <FormField
                                 control={form.control}
                                 name="event_date_start"
@@ -378,7 +393,47 @@ export default function EditEvent({ id }: EditEventProps) {
                                     </FormItem>
                                 )}
                             />
+                            <FormField
+                                control={form.control}
+                                name="onsite_casting_date"
+                                render={({ field }) => (
+                                    <FormItem className="flex flex-col">
+                                        <FormLabel>Onsite Casting Date</FormLabel>
+                                        <Popover>
+                                            <PopoverTrigger asChild>
+                                                <FormControl>
+                                                    <Button
+                                                        variant={"outline"}
+                                                        className={cn(
+                                                            "w-full pl-3 text-left font-normal bg-blackfade2 border-gray-700 hover:bg-blackfade2/80 hover:text-white",
+                                                            !field.value && "text-muted-foreground"
+                                                        )}
+                                                    >
+                                                        {field.value ? (
+                                                            format(parseISO(field.value), "PPP")
+                                                        ) : (
+                                                            <span>Pick a date</span>
+                                                        )}
+                                                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                                    </Button>
+                                                </FormControl>
+                                            </PopoverTrigger>
+                                            <PopoverContent className="w-auto p-0" align="start">
+                                                <Calendar
+                                                    mode="single"
+                                                    selected={field.value ? parseISO(field.value) : undefined}
+                                                    onSelect={(date) => field.onChange(date ? format(date, "yyyy-MM-dd") : "")}
+                                                    className="bg-white"
+                                                    initialFocus
+                                                />
+                                            </PopoverContent>
+                                        </Popover>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
                         </div>
+
 
                         <div className="flex justify-end pt-4">
                             <Button

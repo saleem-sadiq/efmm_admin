@@ -59,7 +59,7 @@ const BookModelButton = ({ talentId, eventId, status, availabilityId }: { talent
             disabled={loading}
             className={`${isBooked ? 'bg-red-600 hover:bg-red-700' : 'bg-green-600 hover:bg-green-700'} text-white text-xs h-8 px-4`}
         >
-            {loading ? <Loader2 className="animate-spin w-4 h-4" /> : (isBooked ? "Mark Available" : "Book Model")}
+            {loading ? <Loader2 className="animate-spin w-4 h-4" /> : (isBooked ? "Cancel Booking" : "Book Model")}
         </Button>
     );
 };
